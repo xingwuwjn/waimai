@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.waimai.dao.mapper.MycountMapper">
+    <resultMap id="BaseResultMap" type="com.waimai.entity.Mycount">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="openid" property="openid" jdbcType="VARCHAR" />
+        <result column="latitude" property="latitude" jdbcType="VARCHAR" />
+        <result column="longitude" property="longitude" jdbcType="VARCHAR" />
+        <result column="taste" property="taste" jdbcType="VARCHAR" />
+        <result column="reminder_time" property="reminder_time" jdbcType="VARCHAR" />
+        <result column="repeate_time" property="repeate_time" jdbcType="VARCHAR" />
+        <result column="geohash" property="geohash" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+           id,openid,latitude,longitude,taste,reminder_time,geohash,repeate_time,address
+    </sql>
+    <!-- 新增 -->
+    <insert id="insert" parameterType="com.waimai.entity.Mycount">
+        insert into mycount
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="openid != null">
+                openid,
+            </if>
+            <if test="latitude != null">
+                latitude,
+            </if>
+            <if test="longitude != null">
+                longitude,
+            </if>
+            <if test="taste != null">
+                taste,
+            </if>
+            <if test="reminder_time != null">
+                reminder_time,
+            </if>
+            <if test="repeate_time != null">
+                repeate_time,
+            </if>
+            <if test="geohash != null">
+                geohash,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="openid != null">
+                #{openid,jdbcType=VARCHAR},
+            </if>
+            <if test="latitude != null">
+                #{latitude,jdbcType=VARCHAR},
+            </if>
+            <if test="longitude != null">
+                #{longitude,jdbcType=VARCHAR},
+            </if>
+            <if test="taste != null">
+                #{taste,jdbcType=VARCHAR},
+            </if>
+            <if test="reminder_time != null">
+                #{reminder_time,jdbcType=VARCHAR},
+            </if>
+            <if test="repeate_time != null">
+                #{repeate_time,jdbcType=VARCHAR},
+            </if>
+            <if test="geohash != null">
+                #{geohash,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <!--依据openid查询出mycount -->
+    <select id="getMycountByOpenid" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from mycount
+        where openid = #{openid,jdbcType=VARCHAR}
+    </select>
+
+
+    <!--查询出所有的mycount-->
+    <select id="getAllMycount" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from mycount
+    </select>
+
+
+    <delete id="deleteMycountById" parameterType="int">
+		delete from
+		mycount
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+</mapper>

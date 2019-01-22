@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.waimai.dao.mapper.MessageMapper">
+    <resultMap id="BaseResultMap" type="com.waimai.entity.Message">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="openid" property="openid" jdbcType="VARCHAR" />
+        <result column="foodname" property="foodname" jdbcType="VARCHAR" />
+        <result column="shopname" property="shopname" jdbcType="VARCHAR" />
+        <result column="price" property="price" jdbcType="FLOAT" />
+        <result column="twoprice" property="twoprice" jdbcType="FLOAT" />
+        <result column="repeate_time" property="repeate_time" jdbcType="VARCHAR" />
+        <result column="rating" property="rating" jdbcType="FLOAT" />
+        <result column="reminder_time" property="reminder_time" jdbcType="VARCHAR" />
+        <result column="shopurl" property="shopurl" jdbcType="VARCHAR" />
+        <result column="today" property="today" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+           id,openid,foodname,shopname,price,twoprice,repeate_time,rating,reminder_time,shopurl,today
+    </sql>
+    <!-- 批量新增 -->
+    <insert id="batchInsertMessage" parameterType="java.util.List">
+        insert into message
+        (openid,foodname,shopname,price,twoprice,repeate_time,rating,reminder_time,shopurl,today)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.openid,jdbcType=VARCHAR},
+            #{item.foodname,jdbcType=VARCHAR},
+            #{item.shopname,jdbcType=VARCHAR},
+            #{item.price,jdbcType=FLOAT},
+            #{item.twoprice,jdbcType=FLOAT},
+            #{item.repeate_time,jdbcType=VARCHAR},
+            #{item.rating,jdbcType=FLOAT},
+            #{item.reminder_time,jdbcType=VARCHAR},
+            #{item.shopurl,jdbcType=VARCHAR},
+            #{item.today,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <!--依据openid查询出message -->
+    <select id="getMessageByOpenid" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List" />
+        from message
+        where openid = #{openid,jdbcType=VARCHAR} and today=#{today,jdbcType=VARCHAR} and reminder_time &lt;= #{time} order by id desc
+
+    </select>
+
+    <!--依据openid,时间查询出message -->
+    <select id="getMessageBytime" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List" />
+        from message
+        where openid = #{openid,jdbcType=VARCHAR}
+        and reminder_time=#{reminder_time,jdbcType=VARCHAR}
+        and today=#{today,jdbcType=VARCHAR}
+        order by id desc
+
+    </select>
+
+    <!--依据openid,时间查询出message -->
+    <select id="getMessageByMessage" resultMap="BaseResultMap" parameterType="com.waimai.entity.Message">
+        select
+        <include refid="Base_Column_List" />
+        from message
+        where openid = #{openid,jdbcType=VARCHAR}
+        and reminder_time=#{reminder_time,jdbcType=VARCHAR}
+        and food_name=#{food_name,jdbcType=VARCHAR}
+        and today=#{today,jdbcType=VARCHAR}
+        and repeate_time=#{repeate_time,jdbcType=VARCHAR}
+        and shopname=#{shopname,jdbcType=VARCHAR}
+
+    </select>
+
+</mapper>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.waimai.dao.mapper.ElmMapper">
+    <resultMap id="BaseResultMap" type="com.waimai.entity.ElmCity">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="citytype" property="citytype" jdbcType="VARCHAR" />
+        <result column="latitude" property="latitude" jdbcType="VARCHAR" />
+        <result column="longitude" property="longitude" jdbcType="VARCHAR" />
+        <result column="cityname" property="cityname" jdbcType="VARCHAR" />
+        <result column="cityid" property="cityid" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+           id,citytype,latitude,longitude,cityname,cityid,geohash
+    </sql>
+     <!--查询所有数据-->
+    <select id="selectAllCity" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM elm_city
+    </select>
+     <!--依据id更新geohash-->
+    <update id="updateCityById"  parameterType="com.waimai.entity.ElmCity">
+        update elm_city
+        <set>
+            <if test="geohash != null">
+                geohash = #{geohash,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

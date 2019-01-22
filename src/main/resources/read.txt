@@ -1,0 +1,10 @@
+./natapp -authtoken=02b5535eae48baee
+
+
+http://localhost:8080/wxAuthorize/getCode?returnUrl=http://waimai.s1.natapp.cc/waimai/main
+
+
+
+https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbed43f5f2db25aa8&
+redirect_uri=http%3A%2F%2Fpx8wwp.natappfree.cc%2FwxAuthorize%2Fauthorize&
+response_type=code&scope=snsapi_base&state=http%3A%2F%2Fwaimai.s1.natapp.cc%2Fwaimai%2Fmain#wechat_redirect

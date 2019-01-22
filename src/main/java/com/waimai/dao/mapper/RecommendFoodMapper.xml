@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.waimai.dao.mapper.RecommendFoodMapper">
+    <resultMap id="BaseResultMap" type="com.waimai.entity.RecommendFood">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="food_id" property="food_id" jdbcType="VARCHAR" />
+        <result column="shop_id" property="shop_id" jdbcType="VARCHAR" />
+        <result column="month_sales" property="month_sales" jdbcType="INTEGER" />
+        <result column="rating" property="rating" jdbcType="FLOAT" />
+        <result column="rating_count" property="rating_count" jdbcType="INTEGER" />
+        <result column="price" property="price" jdbcType="INTEGER" />
+        <result column="packing_fee" property="packing_fee" jdbcType="INTEGER" />
+         <!--商铺字段-->
+        <result column="shopname" property="shopname" jdbcType="INTEGER" />
+        <result column="tips_102" property="tips_102" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="open_hour" property="open_hour" jdbcType="TIME" />
+        <result column="close_hour" property="close_hour" jdbcType="TIME" />
+        <result column="minsendprice" property="minsendprice" jdbcType="INTEGER" />
+        <result column="delivery_fee" property="delivery_fee" jdbcType="FLOAT" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+
+    </resultMap>
+    <sql id="Base_Column_List">
+           a.id,a.name,a.food_id,a.shop_id,a.month_sales,a.rating,a.rating_count,a.price,a.packing_fee,
+           b.name as shopname,b.tips_102,b.status,b.open_hour,b.close_hour,b.minsendprice,b.delivery_fee,b.address
+    </sql>
+    <!--查询所有数据-->
+    <select id="getElmFood" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM elm_food as a, elm_shop as b
+        where a.shop_id=b.shop_id
+        <if test="shopids != null">
+            and a.shop_id in
+            <foreach item="item" index="index" collection="shopids" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        and (a.name like #{keyword1}
+        <foreach item="item" index="index" collection="keywords" separator=" " close=")">
+             or a.name like #{item}
+        </foreach>
+        order BY a.month_sales DESC limit 0,20
+    </select>
+
+
+</mapper>

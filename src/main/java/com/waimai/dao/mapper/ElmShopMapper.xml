@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.waimai.dao.mapper.ElmShopMapper">
+    <resultMap id="BaseResultMap" type="com.waimai.entity.ElmShop">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="shop_id" property="shopid" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="tips102" property="tips_102" jdbcType="VARCHAR" />
+        <result column="minsendprice" property="minsendprice" jdbcType="INTEGER" />
+        <result column="open_hour" property="openhour" jdbcType="VARCHAR" />
+        <result column="close_hour" property="closehour" jdbcType="VARCHAR" />
+        <result column="latitude" property="latitude" jdbcType="VARCHAR" />
+        <result column="longitude" property="longitude" jdbcType="VARCHAR" />
+        <result column="delivery_fee" property="delivery_fee" jdbcType="VARCHAR" />
+        <result column="order_lead_time" property="order_lead_time" jdbcType="VARCHAR" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="rating" property="rating" jdbcType="FLOAT" />
+        <result column="recent_order_num" property="recent_order_num" jdbcType="INTEGER" />
+    </resultMap>
+    <sql id="Base_Column_List">
+           id,name,shop_id,status,address,tips_102,minsendprice,open_hour,close_hour,latitude,longitude,delivery_fee,order_lead_time,phone,rating,recent_order_num
+    </sql>
+    <!--查询所有数据-->
+    <select id="getAllElmShop" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM elm_shop
+    </select>
+
+</mapper>
